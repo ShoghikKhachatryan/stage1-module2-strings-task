@@ -1,5 +1,7 @@
 package com.epam.mjc;
 
+import java.util.*;
+
 public class MethodParser {
 
     /**
@@ -20,6 +22,27 @@ public class MethodParser {
      * @return {@link MethodSignature} object filled with parsed values from source string
      */
     public MethodSignature parseFunction(String signatureString) {
-        throw new UnsupportedOperationException("You should implement this method.");
+        String[] nameAndArgumentPart = signatureString.split("[()]");
+
+        String[] namePart = nameAndArgumentPart[0].split(" ");
+        String functionName = namePart[namePart.length - 1];
+
+        List<MethodSignature.Argument> argumentList = new ArrayList<>();
+
+        if(nameAndArgumentPart.length == 2) {
+            String[] argumentPart = nameAndArgumentPart[1].split("\\s|,\\s*");
+            for(int i = 0; i < argumentPart.length; i += 2) {
+                argumentList.add(new MethodSignature.Argument(argumentPart[i], argumentPart[i + 1]));
+            }
+        }
+
+        MethodSignature methodSignature = new MethodSignature(functionName, argumentList);
+
+        methodSignature.setReturnType(namePart[namePart.length - 2]);
+        if (namePart.length == 3) {
+            methodSignature.setAccessModifier(namePart[namePart.length - 3]);
+        }
+
+        return methodSignature;
     }
 }

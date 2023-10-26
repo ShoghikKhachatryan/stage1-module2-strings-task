@@ -1,7 +1,12 @@
 package com.epam.mjc;
 
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+
+import static java.lang.System.out;
 
 public class StringSplitter {
 
@@ -13,6 +18,14 @@ public class StringSplitter {
      * @return List of substrings
      */
     public List<String> splitByDelimiters(String source, Collection<String> delimiters) {
-        throw new UnsupportedOperationException("You should implement this method.");
+        String[] resultsWidthEmpty = source.split(delimiters.toString());
+        List<String> resultsWithoutEmpty = new ArrayList<>();
+
+        for(String sub : resultsWidthEmpty) {
+            if(!sub.isEmpty()) {
+                resultsWithoutEmpty.add(sub);
+            }
+        }
+        return resultsWithoutEmpty;
     }
 }
